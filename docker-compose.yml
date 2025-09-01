@@ -2,6 +2,8 @@ name: 'emai-mcp-server'
 services:
   email-mcp-server:
     build: .
+    volumes:
+      - ./.env:/app/.env
     ports:
       - "8080:8080"
     restart: unless-stopped
