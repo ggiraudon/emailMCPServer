@@ -37,7 +37,8 @@ class debugLogger implements Logger
 const server = new FastMCP({
   name: "email-mcp-server",
   version: "1.0.0",
-  logger: new debugLogger()
+  // Uncomment line below to enable debug logging
+  // logger: new debugLogger()
 });
 
 

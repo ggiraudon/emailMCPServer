@@ -83,7 +83,7 @@ export class ImapController {
                         item.id = attrs.uid;
                     });
                     msg.once('end', () => {
-                        console.log('Parsed MessageListItem:', item);
+                        //console.log('Parsed MessageListItem:', item);
                         results.push(MessageListItem.parse(item));
                     });
                 });
@@ -120,15 +120,15 @@ export class ImapController {
                             } else {
                                 textBuffer += buffer;
                             }
-                            console.log('=============END============');
+                            //console.log('=============END============');
                             simpleParser(fullbuffer, (parserErr, parsedmail) => {
                                 if (parserErr) throw parserErr;
-                                console.log('Subject:', parsedmail.subject);
-                                console.log('From:', parsedmail.from);
-                                console.log('To:', parsedmail.to);
-                                console.log('Text Body:', parsedmail.text?.toString().length);
-                                console.log('HTML Body:', parsedmail.html.toString().length);
-                                console.log('Headers:', parsedmail.headers);
+                                //console.log('Subject:', parsedmail.subject);
+                                //console.log('From:', parsedmail.from);
+                                //console.log('To:', parsedmail.to);
+                                //console.log('Text Body:', parsedmail.text?.toString().length);
+                                //console.log('HTML Body:', parsedmail.html.toString().length);
+                                //console.log('Headers:', parsedmail.headers);
                                 mail.subject = parsedmail.subject;
                                 mail.from = EmailAddressSchema.parse({ address: parsedmail.from?.value[0].address?.toString(), name: parsedmail.from?.value[0].name });
                                 if (typeof parsedmail.to !== 'undefined' && !Array.isArray(parsedmail.to)) {
@@ -187,7 +187,7 @@ export class ImapController {
 
 
                             });
-                            console.log('=============END============');
+                            //console.log('=============END============');
 
                         });
 
