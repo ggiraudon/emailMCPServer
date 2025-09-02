@@ -12,6 +12,7 @@ import { z } from 'zod';
 
 export class ImapController {
     private imap: Imap;
+    private connected: boolean = false;
 
     constructor(private config: ImapConfig) {
         // Validate config using Zod
@@ -28,11 +29,28 @@ export class ImapController {
     }
 
     connect(): Promise<void> {
-        return new Promise((resolve, reject) => {
-            this.imap.once('ready', () => resolve());
-            this.imap.once('error', (err: any) => reject(err));
-            this.imap.connect();
-        });
+            return new Promise((resolve, reject) => {
+                if(!this.connected) {
+
+                    this.imap.once('ready', () => {
+                        this.connected = true;
+                        resolve();
+                    });
+                    this.imap.once('error', (err: any) => {
+                        console.log(err);
+                    });
+
+                    this.imap.once('end', () => {
+                        console.log('Connection ended');
+                        this.connected = false;
+                    });
+
+                    this.imap.once('error', (err: any) => reject(err));
+                    this.imap.connect();
+                }else{
+                    resolve();
+                }
+            });
     }
 
     getFolderList(): Promise<MailFolder[]> {
