@@ -9,23 +9,15 @@ import { simpleParser, ParsedMail, AddressObject } from 'mailparser';
 import { parseIsolatedEntityName } from 'typescript';
 import { parse } from 'dotenv';
 import { z } from 'zod';
+import { ImapFactory } from '../factories/ImapFactory.js';
 
 export class ImapController {
     private imap: Imap;
     private connected: boolean = false;
 
-    constructor(private config: ImapConfig) {
-        // Validate config using Zod
-        ImapConfigObject.parse(config);
-        this.imap = new Imap({
-            user: config.user,
-            password: config.password,
-            host: config.host,
-            port: config.port,
-            tls: config.tls,
-            tlsOptions: config.tlsOptions,
-            debug: (msg: string) => console.log('IMAP:', msg)
-        });
+    constructor() {
+        this.imap = ImapFactory.getInstance();
+        
     }
 
     connect(): Promise<void> {

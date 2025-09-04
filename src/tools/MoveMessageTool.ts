@@ -17,7 +17,7 @@ export const MoveMessageTool: Tool<any, typeof MoveMessageInput> = {
     if (!args || typeof args !== 'object'|| !('sourceFolder' in args) || !('destinationFolder' in args) || !('id' in args)) {
       throw new Error("Missing required arguments");
     }
-    const controller = new ImapController(imapConfig);
+    const controller = new ImapController();
     await controller.connect();
     await controller.moveMessage(args.sourceFolder, args.destinationFolder, args.id);
     return JSON.stringify({ success: true });

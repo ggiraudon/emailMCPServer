@@ -18,7 +18,7 @@ export const GetMessageListTool: Tool<any, typeof GetMessageListInput> = {
     if (!args || typeof args !== 'object' || !('folder' in args)) {
       throw new Error("Missing required arguments");
     }
-    const controller = new ImapController(imapConfig);
+    const controller = new ImapController();
     await controller.connect();
     const messages: MailItem[] = await controller.getMessageList(args.folder, args.start, args.end);
     return JSON.stringify({ messages });

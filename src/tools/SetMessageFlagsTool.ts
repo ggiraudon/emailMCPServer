@@ -17,7 +17,7 @@ export const SetMessageFlagsTool: Tool<any, typeof SetFlagsInput> = {
     if (!args || typeof args !== 'object' || !('folder' in args) || !('uid' in args) || !('flags' in args)) {
       throw new Error("Missing required arguments");
     }
-    const controller = new ImapController(imapConfig);
+    const controller = new ImapController();
     await controller.connect();
     await controller.setFlags(args.folder, args.uid, args.flags);
     return JSON.stringify({ success: true });

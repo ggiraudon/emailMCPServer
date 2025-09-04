@@ -15,7 +15,7 @@ export const CreateFolderTool: Tool<any, typeof CreateFolderInput> = {
     if (!args || typeof args !== 'object' || !('folderName' in args)) {
       throw new Error("Missing required arguments");
     }
-    const controller = new ImapController(imapConfig);
+    const controller = new ImapController();
     await controller.connect();
     await controller.createFolder(args.folderName);
     return JSON.stringify({ success: true });

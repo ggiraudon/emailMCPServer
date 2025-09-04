@@ -13,7 +13,7 @@ export const GetFolderListTool: Tool<any, typeof GetFolderListInput> = {
   description: "Returns a list of folders in the imap account.",
   parameters: GetFolderListInput,
   async execute(params) {
-    const controller = new ImapController(imapConfig);
+    const controller = new ImapController();
     await controller.connect();
     const folders: MailFolder[] = await controller.getFolderList();
     // Return as a JSON string to match the expected return type

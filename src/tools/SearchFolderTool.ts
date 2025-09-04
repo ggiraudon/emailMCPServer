@@ -26,7 +26,7 @@ export const SearchFolderTool: Tool<any, typeof SearchInput> = {
       throw new Error("Missing required arguments");
     }
     const searchOptions = MailSearchOptionSchema.parse(args);
-    const controller = new ImapController(imapConfig);
+    const controller = new ImapController();
     await controller.connect();
     const ids = await controller.search(args.folder, searchOptions);
     return JSON.stringify({ ids });

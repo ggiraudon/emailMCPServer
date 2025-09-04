@@ -1,4 +1,11 @@
 name: 'emai-mcp-server'
+networks:
+  frontend:
+    name: lan
+    external: true
+  n8n:
+    external: true
+
 services:
   email-mcp-server:
     build: .
@@ -7,3 +14,5 @@ services:
     ports:
       - "8080:8080"
     restart: unless-stopped
+    networks:
+      n8n: null

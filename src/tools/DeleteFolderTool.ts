@@ -16,7 +16,7 @@ export const DeleteFolderTool: Tool<any, typeof DeleteFolderInput> = {
     if (!args || typeof args !== 'object' || !('folderName' in args)) {
       throw new Error("Missing required arguments");
     }
-    const controller = new ImapController(imapConfig);
+    const controller = new ImapController();
     await controller.connect();
     await controller.deleteFolder(args.folderName);
     return JSON.stringify({ success: true });

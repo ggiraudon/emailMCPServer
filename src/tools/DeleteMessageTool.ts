@@ -16,7 +16,7 @@ export const DeleteMessageTool: Tool<any, typeof DeleteMessageInput> = {
     if (!args || typeof args !== 'object' || !('folder' in args) || !('uid' in args)) {
       throw new Error("Missing required arguments");
     }
-    const controller = new ImapController(imapConfig);
+    const controller = new ImapController();
     await controller.connect();
     await controller.deleteMessage(args.folder, args.uid);
     return JSON.stringify({ success: true });
