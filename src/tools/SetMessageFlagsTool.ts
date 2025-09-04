@@ -1,6 +1,5 @@
 import { Tool } from "fastmcp";
-import { imapConfig } from "../models/ImapConfig.js";
-import { ImapController } from "../controllers/ImapController.js";
+import { ImapControllerFactory } from "../factories/ImapControllerFactory.js";
 import { z } from "zod";
 
 export const SetFlagsInput = z.object({
@@ -17,7 +16,7 @@ export const SetMessageFlagsTool: Tool<any, typeof SetFlagsInput> = {
     if (!args || typeof args !== 'object' || !('folder' in args) || !('uid' in args) || !('flags' in args)) {
       throw new Error("Missing required arguments");
     }
-    const controller = new ImapController();
+    const controller = ImapControllerFactory.getInstance();
     await controller.connect();
     await controller.setFlags(args.folder, args.uid, args.flags);
     return JSON.stringify({ success: true });

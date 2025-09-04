@@ -1,6 +1,5 @@
 import { Tool } from "fastmcp";
-import { imapConfig } from "../models/ImapConfig.js";
-import { ImapController } from "../controllers/ImapController.js";
+import { ImapControllerFactory } from "../factories/ImapControllerFactory.js";
 import { MailSearchOptionSchema } from "../models/MailSearchOption.js";
 import { z } from "zod";
 
@@ -26,7 +25,7 @@ export const SearchFolderTool: Tool<any, typeof SearchInput> = {
       throw new Error("Missing required arguments");
     }
     const searchOptions = MailSearchOptionSchema.parse(args);
-    const controller = new ImapController();
+    const controller = ImapControllerFactory.getInstance();
     await controller.connect();
     const ids = await controller.search(args.folder, searchOptions);
     return JSON.stringify({ ids });

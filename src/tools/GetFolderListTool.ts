@@ -1,7 +1,6 @@
 import { TypeOf, z } from "zod";
 import { Tool } from "fastmcp"
-import { imapConfig } from "../models/ImapConfig.js";
-import { ImapController } from "../controllers/ImapController.js";
+import { ImapControllerFactory } from "../factories/ImapControllerFactory.js";
 import { MailFolder,MailFolderSchema } from "../models/MailFolder.js";
 
 const GetFolderListInput = z.object({
@@ -13,7 +12,7 @@ export const GetFolderListTool: Tool<any, typeof GetFolderListInput> = {
   description: "Returns a list of folders in the imap account.",
   parameters: GetFolderListInput,
   async execute(params) {
-    const controller = new ImapController();
+    const controller = ImapControllerFactory.getInstance();
     await controller.connect();
     const folders: MailFolder[] = await controller.getFolderList();
     // Return as a JSON string to match the expected return type

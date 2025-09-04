@@ -1,6 +1,5 @@
 import { Tool } from "fastmcp";
-import { imapConfig } from "../models/ImapConfig.js";
-import { ImapController } from "../controllers/ImapController.js";
+import { ImapControllerFactory } from "../factories/ImapControllerFactory.js";
 import { z } from "zod";
 
 export const CreateFolderInput = z.object({
@@ -15,7 +14,7 @@ export const CreateFolderTool: Tool<any, typeof CreateFolderInput> = {
     if (!args || typeof args !== 'object' || !('folderName' in args)) {
       throw new Error("Missing required arguments");
     }
-    const controller = new ImapController();
+    const controller = ImapControllerFactory.getInstance();
     await controller.connect();
     await controller.createFolder(args.folderName);
     return JSON.stringify({ success: true });

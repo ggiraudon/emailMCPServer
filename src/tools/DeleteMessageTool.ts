@@ -1,6 +1,5 @@
 import { Tool } from "fastmcp";
-import { imapConfig } from "../models/ImapConfig.js";
-import { ImapController } from "../controllers/ImapController.js";
+import { ImapControllerFactory } from "../factories/ImapControllerFactory.js";
 import { z } from "zod";
 
 export const DeleteMessageInput = z.object({
@@ -16,7 +15,7 @@ export const DeleteMessageTool: Tool<any, typeof DeleteMessageInput> = {
     if (!args || typeof args !== 'object' || !('folder' in args) || !('uid' in args)) {
       throw new Error("Missing required arguments");
     }
-    const controller = new ImapController();
+    const controller = ImapControllerFactory.getInstance();
     await controller.connect();
     await controller.deleteMessage(args.folder, args.uid);
     return JSON.stringify({ success: true });

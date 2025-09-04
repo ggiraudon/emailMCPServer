@@ -1,6 +1,5 @@
 import { Tool } from "fastmcp";
-import { imapConfig } from "../models/ImapConfig.js";
-import { ImapController } from "../controllers/ImapController.js";
+import { ImapControllerFactory } from "../factories/ImapControllerFactory.js";
 import { z } from "zod";
 
 export const ClearMessageFlagsToolInput = z.object({
@@ -18,7 +17,7 @@ export const ClearMessageFlagsTool: Tool<any, typeof ClearMessageFlagsToolInput>
     if (!args || typeof args !== 'object' || !('folder' in args) || !('uid' in args) || !('flags' in args)) {
       throw new Error("Missing required arguments");
     }
-    const controller = new ImapController();
+    const controller = ImapControllerFactory.getInstance();
     await controller.connect();
     await controller.ClearMessageFlagsTool(args.folder, args.uid, args.flags);
     return JSON.stringify({ success: true });

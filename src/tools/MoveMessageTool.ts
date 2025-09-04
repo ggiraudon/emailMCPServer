@@ -1,6 +1,5 @@
 import { Tool } from "fastmcp";
-import { imapConfig } from "../models/ImapConfig.js";
-import { ImapController } from "../controllers/ImapController.js";
+import { ImapControllerFactory } from "../factories/ImapControllerFactory.js";
 import { z } from "zod";
 
 export const MoveMessageInput = z.object({
@@ -17,7 +16,7 @@ export const MoveMessageTool: Tool<any, typeof MoveMessageInput> = {
     if (!args || typeof args !== 'object'|| !('sourceFolder' in args) || !('destinationFolder' in args) || !('id' in args)) {
       throw new Error("Missing required arguments");
     }
-    const controller = new ImapController();
+    const controller = ImapControllerFactory.getInstance();
     await controller.connect();
     await controller.moveMessage(args.sourceFolder, args.destinationFolder, args.id);
     return JSON.stringify({ success: true });

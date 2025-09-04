@@ -1,6 +1,5 @@
 import { Tool } from "fastmcp";
-import { imapConfig } from "../models/ImapConfig.js";
-import { ImapController } from "../controllers/ImapController.js";
+import { ImapControllerFactory } from "../factories/ImapControllerFactory.js";
 import { MailItem } from "../models/MailItem.js";
 import { z } from "zod";
 
@@ -18,7 +17,7 @@ export const GetMessageListTool: Tool<any, typeof GetMessageListInput> = {
     if (!args || typeof args !== 'object' || !('folder' in args)) {
       throw new Error("Missing required arguments");
     }
-    const controller = new ImapController();
+    const controller = ImapControllerFactory.getInstance();
     await controller.connect();
     const messages: MailItem[] = await controller.getMessageList(args.folder, args.start, args.end);
     return JSON.stringify({ messages });

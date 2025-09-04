@@ -23,9 +23,9 @@ export class ImapController {
     connect(): Promise<void> {
             return new Promise((resolve, reject) => {
                 if(!this.connected) {
-
+                    console.log('Connecting to IMAP server...');
                     this.imap.once('ready', () => {
-                        this.connected = true;
+                        console.log('IMAP server connected');
                         resolve();
                     });
                     this.imap.once('error', (err: any) => {
@@ -39,6 +39,8 @@ export class ImapController {
 
                     this.imap.once('error', (err: any) => reject(err));
                     this.imap.connect();
+                    this.connected = true;
+
                 }else{
                     resolve();
                 }
